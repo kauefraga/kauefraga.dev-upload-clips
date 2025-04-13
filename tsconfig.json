@@ -1,23 +1,16 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 22",
+  "_version": "22.0.0",
   "compilerOptions": {
     "lib": [
-      "esnext"
+      "es2023"
     ],
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
+    "module": "ES2022",
+    "target": "ES2022",
     "strict": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
+    "moduleResolution": "bundler"
   }
 }
