@@ -1,17 +1,10 @@
-import { Client as MinioClient } from 'minio';
 import { z } from 'zod';
 import { env } from '../env';
+import { minioClient } from '../infra/minio';
 import { defineController } from "../server";
 import { MinIOClipsRepository } from './minio-clips.repository';
 
 export const ClipsController = defineController(http => {
-  const minioClient = new MinioClient({
-    endPoint: 'localhost',
-    port: 9000,
-    useSSL: false,
-    accessKey: env.S3_ACCESS_KEY,
-    secretKey: env.S3_SECRET_KEY,
-  });
   const clipsRepository = new MinIOClipsRepository(env.S3_BUCKET_NAME, minioClient);
 
   http.get('/clips', () => ({ hello: 'world' }));
@@ -38,11 +31,15 @@ export const ClipsController = defineController(http => {
     }
 
     try {
-      await clipsRepository.upload({ filename, file });
-    } catch (error) {
-      return reply.status(409).send({ error })
-    }
+      const uploadedFilename = await clipsRepository.upload({ filename, file })
 
-    return reply.send({ message: 'Upload successful', filename });
+      return reply.send({ message: 'Upload successful', filename: uploadedFilename });
+    } catch (error) {
+      if (error instanceof Error) {
+        return reply.status(409).send({ error: error.message });
+      }
+
+      return reply.status(500).send({ error: 'Internal server error' });
+    }
   });
 });

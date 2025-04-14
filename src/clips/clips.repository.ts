@@ -16,6 +16,6 @@ export type ClipFile = {
 /** Repository for uploading and retrieving clips in S3 buckets */
 export interface ClipsS3Repository {
   upload(clip: ClipFile): Promise<string>
-  find(id: string): Promise<ClipFile>
+  find(filename: string): Promise<ClipFile>
   findAll(): Promise<ClipFile[]>
 }

@@ -16,22 +16,27 @@ export class MinIOClipsRepository implements ClipsS3Repository {
   async upload({ filename, file }: ClipFile): Promise<string> {
     await ensureBucketExists(this.bucketName, this.minioClient);
 
-    const clipMetadata = await this.minioClient.statObject(this.bucketName, filename)
-      .catch(() => null);
+    const fileExists = await this.minioClient.statObject(this.bucketName, filename)
+      .catch(() => {
+        // .statObject throws an error when the object does not exist
+        // in this case, we don't want to do nothing
+        return null;
+      });
 
-    if (clipMetadata) {
+    if (fileExists) {
       throw new Error('A clip with this filename already exists');
     }
 
-    await this.minioClient.putObject(this.bucketName, filename, file)
-      .catch(() => {
-        throw new Error('Error uploading the file');
-      });
+    const uploadedFile = await this.minioClient.putObject(this.bucketName, filename, file);
+
+    if (!uploadedFile) {
+      throw new Error('Failed to upload clip file');
+    }
 
     return filename;
   }
 
-  find(id: string): Promise<ClipFile> {
+  async find(filename: string): Promise<ClipFile> {
     throw new Error('Method not implemented.');
   }
 
