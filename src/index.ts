@@ -7,4 +7,4 @@ const server = createServer();
 defineRoutes(server, [UsersController, ClipsController]);
 
 console.log(':> Server running at http://localhost:3333/');
-server.listen({ port: 3333 }).catch(reason => console.error('error :>', reason));
+server.listen({ port: 3333, host: '::' }).catch(reason => console.error('error :>', reason));
