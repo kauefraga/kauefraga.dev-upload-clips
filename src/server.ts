@@ -16,6 +16,8 @@ export function createServer() {
   http.register(cookie, {
     secret: env.COOKIE_SECRET
   });
+
+  // REMOVER
   http.register(multipart, {
     limits: {
       fileSize: 200 * 1024 * 1024, // 200 MB
