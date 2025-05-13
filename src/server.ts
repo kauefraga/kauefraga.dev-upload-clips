@@ -18,7 +18,7 @@ export function createServer() {
 
   http.setErrorHandler((error, _, reply) => {
     if (error instanceof ZodError) {
-      return reply.status(400).send({ message: error.errors[0]?.message });
+      return reply.status(400).send({ errors: error.errors });
     }
 
     return reply.status(500).send({ message: error.message });
