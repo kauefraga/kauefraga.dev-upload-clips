@@ -35,3 +35,6 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # MinIO volume
 minio
+
+# Bruno API collection
+bruno-api-collection
