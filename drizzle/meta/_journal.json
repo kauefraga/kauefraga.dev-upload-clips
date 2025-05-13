@@ -15,6 +15,13 @@
       "when": 1747006971916,
       "tag": "0001_early_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1747105003099,
+      "tag": "0002_watery_korath",
+      "breakpoints": true
     }
   ]
 }
