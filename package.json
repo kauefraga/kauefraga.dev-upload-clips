@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "tsup src/",
-    "start": "node .",
+    "start": "node dist/index.cjs",
     "dev": "tsx --watch src/index.ts",
     "migrate:prod": "NODE_ENV=production drizzle-kit migrate"
   },
