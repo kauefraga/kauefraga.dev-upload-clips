@@ -1,8 +1,10 @@
+import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import multipart from '@fastify/multipart';
 import fastify from 'fastify';
 import { ZodError } from 'zod';
+import { env } from './env';
 
 export function createServer() {
   const http = fastify({
@@ -11,6 +13,9 @@ export function createServer() {
 
   http.register(helmet);
   http.register(cors);
+  http.register(cookie, {
+    secret: env.COOKIE_SECRET
+  });
   http.register(multipart, {
     limits: {
       fileSize: 200 * 1024 * 1024, // 200 MB
@@ -18,8 +23,6 @@ export function createServer() {
   });
 
   http.setErrorHandler((error, _, reply) => {
-    console.log(error); // REMOVE
-
     if (error instanceof ZodError) {
       return reply.status(400).send({ message: error.errors[0]?.message });
     }
