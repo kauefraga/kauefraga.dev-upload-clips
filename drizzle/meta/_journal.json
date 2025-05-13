@@ -8,6 +8,13 @@
       "when": 1746903167368,
       "tag": "0000_aspiring_pyro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1747006971916,
+      "tag": "0001_early_hellfire_club",
+      "breakpoints": true
     }
   ]
 }
